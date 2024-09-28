@@ -8,6 +8,8 @@ public class BackgroundMaterial : MonoBehaviour
     private float moveSpeed = 0.1f;
     private Material material;
 
+    private Vector2 currentOffset = Vector2.zero;
+
     private void Awake()
     {
         material = GetComponent<Renderer>().material;
@@ -15,6 +17,11 @@ public class BackgroundMaterial : MonoBehaviour
 
     private void Update()
     {
-        material.SetTextureOffset("_MainTex", Vector2.right * moveSpeed * Time.time);
+        if (!GameManger.instance.isAttacking)
+        {
+            currentOffset += Vector2.right * moveSpeed * Time.deltaTime * (GameManger.instance.playerData.Speed);
+            material.SetTextureOffset("_MainTex", currentOffset);
+        }
+
+        }
     }
-}
